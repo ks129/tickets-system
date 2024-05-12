@@ -58,6 +58,9 @@ class Event
     #[ORM\OneToMany(targetEntity: EventTicketType::class, mappedBy: 'event', orphanRemoval: true)]
     private Collection $eventTicketTypes;
 
+    #[ORM\Column]
+    private ?bool $isPublic = null;
+
     public function __construct()
     {
         $this->hosts = new ArrayCollection();
@@ -223,6 +226,18 @@ class Event
                 $eventTicketType->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setPublic(bool $isPublic): static
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }
