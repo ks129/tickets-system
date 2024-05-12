@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="card col-md-5">
+            <div class="card-body">
+                <h5 class="card-title">{{ 'Register'|trans }}</h5>
+
+                {{ form_errors(registrationForm) }}
+
+                {{ form_start(registrationForm) }}
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(registrationForm.firstName) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(registrationForm.lastName) }}
+                    </div>
+                </div>
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+
+                <button type="submit" class="btn btn-primary">{{ 'Register'|trans }}</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

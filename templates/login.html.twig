@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+        <div class="row justify-content-center">
+        <div class="card col-md-5">
+            <div class="card-body">
+                <h5 class="card-title">{{ 'Login'|trans }}</h5>
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+                <form action="{{ path('app_login') }}" method="post">
+                    <div class="mb-3 form-floating">
+                        <input type="email" class="form-control" name="_username" id="email" placeholder="test@test.com" value="{{ last_username }}">
+                        <label for="email">{{ 'E-mail address'|trans }}</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <input type="password" class="form-control" name="_password" id="password" placeholder="....">
+                        <label for="password">{{ 'Password'|trans }}</label>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me" name="_remember_me">
+                        <label class="form-check-label" for="remember-me">{{ 'Remember me'|trans }}</label>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <button type="submit" class="btn btn-primary">{{ 'Login'|trans }}</button>
+                </form>
+            </div>
+        </div>
+        </div>
+{% endblock %}
