@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,6 +38,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isAdmin = false;
+
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'hosts')]
+    private Collection $eventsHosts;
+
+    /**
+     * @var Collection<int, Event>
+     */
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'ticketCheckers')]
+    private Collection $eventsCheckers;
+
+    public function __construct()
+    {
+        $this->eventsHosts = new ArrayCollection();
+        $this->eventsCheckers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +155,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAdmin(bool $isAdmin): static
     {
         $this->isAdmin = $isAdmin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEventsHost(): Collection
+    {
+        return $this->eventsHosts;
+    }
+
+    public function addEventsHost(Event $eventsHost): static
+    {
+        if (!$this->eventsHosts->contains($eventsHost)) {
+            $this->eventsHosts->add($eventsHost);
+            $eventsHost->addHost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsHost(Event $eventsHost): static
+    {
+        if ($this->eventsHosts->removeElement($eventsHost)) {
+            $eventsHost->removeHost($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEventsCheckers(): Collection
+    {
+        return $this->eventsCheckers;
+    }
+
+    public function addEventsChecker(Event $eventsChecker): static
+    {
+        if (!$this->eventsCheckers->contains($eventsChecker)) {
+            $this->eventsCheckers->add($eventsChecker);
+            $eventsChecker->addTicketChecker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventsChecker(Event $eventsChecker): static
+    {
+        if ($this->eventsCheckers->removeElement($eventsChecker)) {
+            $eventsChecker->removeTicketChecker($this);
+        }
 
         return $this;
     }
