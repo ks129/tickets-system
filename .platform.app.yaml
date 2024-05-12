@@ -4,7 +4,7 @@ type: php:8.3
 
 runtime:
     extensions:
-        
+        - pdo_pgsql
 
 #variables:
 #    php:
@@ -38,6 +38,10 @@ workers:
 
 mounts:
     "/var": { source: local, source_path: var }
+
+
+relationships:
+    database:
     
 
 hooks:
