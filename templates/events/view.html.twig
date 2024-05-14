@@ -66,4 +66,44 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'Ticket types'|trans }}</h5>
+                    <a class="btn btn-primary" href="{{ path('app_event_ticket_type_new', {'id': event.id}) }}">{{ 'Add ticket type'|trans }}</a>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'ID'|trans }}</th>
+                            <th scope="col">{{ 'Name'|trans }}</th>
+                            <th scope="col">{{ 'Price'|trans }}</th>
+                            <th scope="col">{{ 'Requirements'|trans }}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for type in event.eventTicketTypes %}
+                            <tr>
+                                <td>{{ type.id }}</td>
+                                <td>{{ type.name }}</td>
+                                <td>{{ type.price|format_currency('EUR') }}</td>
+                                <td>{{ type.requirements|raw }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('app_event_ticket_type_edit', {'id': type.id}) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
+                                        <a href="{{ path('app_event_ticket_type_delete', {'id': type.id}) }}" class="btn btn-danger">{{ 'Delete'|trans }}</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock body %}
