@@ -36,7 +36,16 @@
                         <a href="{{ path('app_events_edit', {'id': event.id}) }}" class="btn btn-secondary">{{ 'Edit'|trans }}</a>
                         {% endif %}
                         {% if "ROLE_ADMIN" in app.user.roles %}
-                        <a href="{{ path('app_events_delete', {'id': event.id}) }}" class="btn btn-danger">{{ 'Delete'|trans }}</a>
+                            <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirm-delete-modal-event"
+                                    {{ stimulus_controller('submit-confirm', {'url': path('app_events_delete', {'id': event.id}), 'type': 'event'}) }}
+                                    {{ stimulus_action('submit-confirm', 'confirm') }}
+                            >
+                                {{ 'Delete'|trans }}
+                            </button>
                         {% endif %}
                     </div>
                 </td>
@@ -45,4 +54,8 @@
         </tbody>
     </table>
     {{ pagerfanta(pager) }}
+
+    {% if "ROLE_ADMIN" in app.user.roles %}
+        {% include 'utils/delete_confirm_modal.html.twig' with {'confirmation_text': 'Are you sure you want to delete this event?'|trans, 'type': 'event'} %}
+    {% endif %}
 {% endblock body %}

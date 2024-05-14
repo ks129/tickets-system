@@ -83,7 +83,7 @@ class EventNewsController extends AbstractController
         ]);
     }
 
-    #[Route('/event-news/{id}/delete', name: 'app_event_delete_news')]
+    #[Route('/event-news/{id}/delete', name: 'app_event_delete_news', methods: ['POST'])]
     public function delete(EventNews $eventNews, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$eventNews->getEvent()->getHosts()->contains($this->getUser())) {

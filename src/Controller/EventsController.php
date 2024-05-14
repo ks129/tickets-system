@@ -95,7 +95,7 @@ class EventsController extends AbstractController
         ]);
     }
 
-    #[Route('/events/{id}/delete', name: 'app_events_delete')]
+    #[Route('/events/{id}/delete', name: 'app_events_delete', methods: ['POST'])]
     public function delete(Event $event, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');

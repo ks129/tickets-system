@@ -42,7 +42,7 @@ class EventTicketTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/event-ticket-type/{id}/edit', name: 'app_event_ticket_type_edit')]
+    #[Route('/event-ticket-type/{id}/edit', name: 'app_event_ticket_type_edit', methods: ['POST'])]
     public function edit(EventTicketType $eventTicketType, EntityManagerInterface $entityManager, Request $request, TranslatorInterface $translator): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$eventTicketType->getEvent()->getHosts()->contains($this->getUser())) {
