@@ -8,12 +8,10 @@ use App\Entity\EventTicketType;
 use App\Entity\Ticket;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use NumberFormatter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TicketType extends AbstractType
@@ -21,7 +19,7 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $event = (int) $options['event'];
-        $formatter = new NumberFormatter('en-US', NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter('en-US', \NumberFormatter::CURRENCY);
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'First name',
@@ -55,7 +53,7 @@ class TicketType extends AbstractType
                 },
                 'choice_label' => function (EventTicketType $eventTicketType) use ($formatter): string {
                     return $eventTicketType->getName().' ('.$formatter->formatCurrency($eventTicketType->getPrice(), 'EUR').')';
-                }
+                },
             ]);
     }
 

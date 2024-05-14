@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Ticket;
-use App\Form\EventType;
 use App\Form\TicketType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -48,10 +47,11 @@ class PublicController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $data->setTicketNumber('EVENT-'.$event->getId().'-'. time().'-'.Uuid::uuid4());
+            $data->setTicketNumber('EVENT-'.$event->getId().'-'.time().'-'.Uuid::uuid4());
             $entityManager->persist($data);
             $entityManager->flush();
             $this->addFlash('success', $translator->trans('Ticket successfully generated. PDF file will be downloaded shortly.'));
+
             return $this->redirectToRoute('app_view_event_public', ['id' => $event->getId()]);
         }
 
@@ -68,6 +68,7 @@ class PublicController extends AbstractController
         $html = $this->renderView('ticket.html.twig', [
             'ticket' => $ticket,
         ]);
+
         return new PdfResponse($knpSnappyPdf->getOutputFromHtml($html), $ticket->getId().'.pdf');
     }
 }

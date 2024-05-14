@@ -24,6 +24,7 @@ class HomeController extends AbstractController
             $request->query->get('page', 1),
             20
         );
+
         return $this->render('home.html.twig', [
             'pager' => $pagerfanta,
         ]);
