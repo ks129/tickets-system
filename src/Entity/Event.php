@@ -61,6 +61,9 @@ class Event
     #[ORM\Column]
     private ?bool $isPublic = null;
 
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $ticketsAvailable = null;
+
     public function __construct()
     {
         $this->hosts = new ArrayCollection();
@@ -238,6 +241,18 @@ class Event
     public function setIsPublic(bool $isPublic): static
     {
         $this->isPublic = $isPublic;
+
+        return $this;
+    }
+
+    public function isTicketsAvailable(): ?bool
+    {
+        return $this->ticketsAvailable;
+    }
+
+    public function setTicketsAvailable(bool $ticketsAvailable): static
+    {
+        $this->ticketsAvailable = $ticketsAvailable;
 
         return $this;
     }

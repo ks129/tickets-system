@@ -51,7 +51,8 @@ class EventType extends AbstractType
                 'class' => User::class,
                 'multiple' => true,
             ])
-            ->add('isPublic');
+            ->add('isPublic')
+            ->add('ticketsAvailable');
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             if (!$this->security->isGranted('ROLE_ADMIN')) {

@@ -18,6 +18,7 @@
             <th scope="col">{{ 'Begins at'|trans }}</th>
             <th scope="col">{{ 'Ends at'|trans }}</th>
             <th scope="col">{{ 'Public'|trans }}</th>
+            <th scope="col">{{ 'Tickets'|trans }}</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -29,6 +30,7 @@
                 <td>{{ event.beginAt|format_datetime }}</td>
                 <td>{{ event.endAt|format_datetime }}</td>
                 <td>{{ event.isPublic ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ event.ticketsAvailable ? 'Available'|trans : 'Not available'|trans }}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="{{ 'Event actions'|trans }}">
                         <a href="{{ path('app_events_show', {'id': event.id}) }}" class="btn btn-primary">{{ 'View'|trans }}</a>
