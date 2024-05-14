@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Edit news article for %event%'|trans({'%event%': event.name}) }}
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'Edit news article for %event%'|trans({'%event%': event.name}) }}</h5>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-primary">{{ 'Edit'|trans }}</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

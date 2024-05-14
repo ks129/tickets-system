@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'View event %name%'|trans({'%name%': event.name}) }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'General information'|trans }}</h5>
+                    <p><b>{{ 'Name'|trans }}</b>: {{ event.name }}</p>
+                    <p><b>{{ 'Begin at'|trans }}</b>: {{ event.beginAt|format_datetime }}</p>
+                    <p><b>{{ 'End at'|trans }}</b>: {{ event.endAt|format_datetime }}</p>
+                    <p><b>{{ 'Public'|trans }}</b>: {{ event.public ? 'Yes'|trans : 'No'|trans }}</p>
+                    <p><b>{{ 'Hosts'|trans }}</b>: {{ event.hosts|join(', ') }}</p>
+                    <p><b>{{ 'Checkers'|trans }}</b>: {{ event.ticketCheckers|join(', ') }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'Description'|trans }}</h5>
+
+                    {{ event.description|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'Event news'|trans }}</h5>
+                    <a class="btn btn-primary" href="{{ path('app_event_create_news', {'id': event.id}) }}">{{ 'Add news'|trans }}</a>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'ID'|trans }}</th>
+                            <th scope="col">{{ 'Title'|trans }}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for news in event.eventNews %}
+                            <tr>
+                                <td>{{ news.id }}</td>
+                                <td>{{ news.title }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('app_event_news_view', {'id': news.id}) }}" class="btn btn-secondary">{{ 'View'|trans }}</a>
+                                        <a href="{{ path('app_event_edit_news', {'id': news.id}) }}" class="btn btn-primary">{{ 'Edit'|trans }}</a>
+                                        <a href="{{ path('app_event_delete_news', {'id': news.id}) }}" class="btn btn-danger">{{ 'Delete'|trans }}</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

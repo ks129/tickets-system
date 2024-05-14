@@ -8,13 +8,20 @@ use App\Entity\Event;
 use App\Entity\User;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventType extends AbstractType
 {
+    public function __construct(private readonly Security $security)
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -35,16 +42,22 @@ class EventType extends AbstractType
                 'translation_domain' => 'event',
                 'autocomplete' => true,
                 'class' => User::class,
-                'data' => null,
+                'multiple' => true,
             ])
             ->add('ticketCheckers', EntityType::class, [
                 'label' => 'Ticket checkers',
                 'translation_domain' => 'event',
                 'autocomplete' => true,
                 'class' => User::class,
-                'data' => null,
+                'multiple' => true,
             ])
             ->add('isPublic');
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+            if (!$this->security->isGranted('ROLE_ADMIN')) {
+                $event->getForm()->remove('hosts');
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)

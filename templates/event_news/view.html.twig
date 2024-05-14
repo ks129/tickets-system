@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ news.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="m-2">
+        <a class="btn btn-secondary" href="{{ path('app_events_show', {'id': news.event.id}) }}">{{ 'Back to event'|trans }}</a>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ news.title }}</h5>
+                    <p><b>{{ 'Created at'|trans }}</b>: {{ news.createdAt|format_datetime }}</p>
+                    <p><b>{{ 'Updated at'|trans }}</b>: {{ news.updatedAt|format_datetime }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ 'Content'|trans }}</h5>
+
+                    {{ news.content|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

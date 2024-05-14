@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,5 +60,49 @@ class EventsController extends AbstractController
         return $this->render('events/new.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/events/{id}/edit', name: 'app_events_edit')]
+    public function edit(Event $event, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN') && !$event->getHosts()->contains($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event = $form->getData();
+            $entityManager->persist($event);
+            $entityManager->flush();
+            $this->addFlash('success', $translator->trans('Event successfully edited.'));
+
+            return $this->redirectToRoute('app_events');
+        }
+
+        return $this->render('events/edit.html.twig', [
+            'event' => $event,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/events/{id}', name: 'app_events_show')]
+    public function view(Event $event): Response
+    {
+        return $this->render('events/view.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    #[Route('/events/{id}/delete', name: 'app_events_delete')]
+    public function delete(Event $event, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $entityManager->remove($event);
+        $entityManager->flush();
+        $this->addFlash('success', $translator->trans('An event deleted successfully.'));
+
+        return $this->redirectToRoute('app_events');
     }
 }
