@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'All events'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% if "ROLE_ADMIN" in app.user.roles %}
+    <div class="mb-3">
+        <a href="{{ path('app_events_new') }}" class="btn btn-primary">{{ 'Create a new event'|trans }}</a>
+    </div>
+    {% endif %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">{{ 'ID'|trans }}</th>
+            <th scope="col">{{ 'Name'|trans }}</th>
+            <th scope="col">{{ 'Begins at'|trans }}</th>
+            <th scope="col">{{ 'Ends at'|trans }}</th>
+            <th scope="col">{{ 'Public'|trans }}</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in pager %}
+            <tr>
+                <th scope="row">{{ event.id }}</th>
+                <td>{{ event.name }}</td>
+                <td>{{ event.beginAt|format_datetime }}</td>
+                <td>{{ event.endAt|format_datetime }}</td>
+                <td>{{ event.isPublic ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="{{ 'Event actions'|trans }}">
+                        <a href="#" class="btn btn-primary">{{ 'View'|trans }}</a>
+                        <a href="#" class="btn btn-secondary">{{ 'Edit'|trans }}</a>
+                        <a href="#" class="btn btn-danger">{{ 'Delete'|trans }}</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ pagerfanta(pager) }}
+{% endblock body %}

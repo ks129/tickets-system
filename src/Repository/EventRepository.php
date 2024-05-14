@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,6 +16,20 @@ class EventRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
+    }
+
+    public function findEventsForAdminQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.id', 'ASC');
+    }
+
+    public function findEventsForUserQueryBuilder(?User $user): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere(':user MEMBER OF e.hosts OR :user MEMBER OF e.ticketCheckers')
+            ->setParameter('user', $user->getId())
+            ->orderBy('e.id', 'ASC');
     }
 
     //    /**

@@ -7,10 +7,14 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "babdev/pagerfanta-bundle": "^4.4",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
+        "friendsofsymfony/ckeditor-bundle": "^2.5",
+        "pagerfanta/doctrine-orm-adapter": "^4.5",
+        "pagerfanta/twig": "^4.5",
         "php-cs-fixer/shim": "^3.56",
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^1.29",
@@ -39,11 +43,13 @@
         "symfony/string": "7.0.*",
         "symfony/translation": "7.0.*",
         "symfony/twig-bundle": "7.0.*",
+        "symfony/ux-autocomplete": "^2.17",
         "symfony/ux-turbo": "^2.17",
         "symfony/validator": "7.0.*",
         "symfony/web-link": "7.0.*",
         "symfony/yaml": "7.0.*",
-        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/extra-bundle": "^3.10",
+        "twig/intl-extra": "^3.10",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {
@@ -78,7 +84,8 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+            "importmap:install": "symfony-cmd",
+            "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
