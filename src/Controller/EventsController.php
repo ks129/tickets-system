@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Ticket;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\TicketRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
@@ -104,5 +106,41 @@ class EventsController extends AbstractController
         $this->addFlash('success', $translator->trans('An event deleted successfully.'));
 
         return $this->redirectToRoute('app_events');
+    }
+
+    #[Route('/events/{id}/tickets', name: 'app_events_tickets')]
+    public function tickets(Event $event, TicketRepository $ticketRepository, Request $request): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN') && !$event->getHosts()->contains($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $queryBuilder = $ticketRepository->findAllEventTickets($event);
+        $adapter = new QueryAdapter($queryBuilder);
+        $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            $request->query->get('page', 1),
+            20
+        );
+
+        return $this->render('events/tickets.html.twig', [
+            'pager' => $pagerfanta,
+        ]);
+    }
+
+    #[Route('/events/tickets/{id}/mark-paid', name: 'app_events_tickets_mark_paid', methods: ['POST'])]
+    public function markPaid(Ticket $ticket, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN') && !$ticket->getTicketType()->getEvent()->getHosts()->contains($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $ticket->setPaid(true);
+        $entityManager->persist($ticket);
+        $entityManager->flush();
+
+        $this->addFlash('success', $translator->trans('Ticket successfully marked paid.'));
+
+        return $this->redirectToRoute('app_events_tickets', ['id' => $ticket->getTicketType()->getEvent()->getId()]);
     }
 }

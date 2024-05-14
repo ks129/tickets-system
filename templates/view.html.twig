@@ -27,7 +27,7 @@
                     <h3 class="card-title">{{ 'Tickets'|trans }}</h3>
 
                     {% if event.ticketsAvailable %}
-                    <a href="#" class="btn btn-success">{{ 'Buy tickets'|trans }}</a>
+                    <a href="{{ path('app_buy_tickets', {'id': event.id}) }}" class="btn btn-success">{{ 'Buy tickets'|trans }}</a>
                     {% endif %}
 
                     {% for ticket_type in event.eventTicketTypes %}

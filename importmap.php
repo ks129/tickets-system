@@ -46,4 +46,10 @@ return [
         'version' => '2.3.1',
         'type' => 'css',
     ],
+    'html5-qrcode' => [
+        'version' => '2.3.8',
+    ],
+    'axios' => [
+        'version' => '1.6.8',
+    ],
 ];

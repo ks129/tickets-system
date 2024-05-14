@@ -20,7 +20,7 @@
                     <div class="btn-group">
                         <a href="{{ path('app_view_event_public', {'id': event.id}) }}" class="btn btn-secondary">{{ 'View more'|trans }}</a>
                         {% if event.ticketsAvailable %}
-                        <a href="#" class="btn btn-success">{{ 'Buy tickets'|trans }}</a>
+                        <a href="{{ path('app_buy_tickets', {'id': event.id}) }}" class="btn btn-success">{{ 'Buy tickets'|trans }}</a>
                         {% endif %}
                     </div>
                 </td>

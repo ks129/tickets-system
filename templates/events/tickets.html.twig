@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Tickets'|trans }}
+{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">{{ 'ID'|trans }}</th>
+            <th scope="col">{{ 'First name'|trans }}</th>
+            <th scope="col">{{ 'Last name'|trans }}</th>
+            <th scope="col">{{ 'Email'|trans }}</th>
+            <th scope="col">{{ 'Phone'|trans }}</th>
+            <th scope="col">{{ 'Ticket type'|trans }}</th>
+            <th scope="col">{{ 'Paid'|trans }}</th>
+            <th scope="col">{{ 'Times used'|trans }}</th>
+            <th scope="col" class="col-2"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ticket in pager %}
+            <tr>
+                <th scope="row">{{ ticket.id }}</th>
+                <td>{{ ticket.firstName }}</td>
+                <td>{{ ticket.lastName }}</td>
+                <td>{{ ticket.email }}</td>
+                <td>{{ ticket.phone }}</td>
+                <td>{{ ticket.ticketType.name }}</td>
+                <td>{{ ticket.paid ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ ticket.timesUsed }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="{{ 'Event actions'|trans }}">
+                        <a href="{{ path('app_download_ticket', {'ticketNumber': ticket.ticketNumber}) }}" class="btn btn-secondary">{{ 'Download ticket'|trans }}</a>
+                        <button
+                                type="button"
+                                class="btn btn-success"
+                                {{ stimulus_controller('mark-confirm', {'url': path('app_events_tickets_mark_paid', {'id': ticket.id})}) }}
+                                {{ stimulus_action('mark-confirm', 'confirm') }}
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirm-paid-modal"
+                        >
+                            {{ 'Mark paid'|trans }}
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ pagerfanta(pager) }}
+
+    {% include 'utils/mark_paid_confirm_modal.html.twig' with {'confirmation_text': 'Are you sure you want to mark this ticket paid?'|trans } %}
+{% endblock body %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Checking tickets'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div id="response-area">
+                <p>{{ 'Waiting for tickets...'|trans }}</p>
+            </div>
+        </div>
+        <div class="col" {{ stimulus_controller('scanner', {'eventId': event.id, 'url': path('app_check')}) }}>
+            <div id="reader" width="600px"></div>
+        </div>
+    </div>
+{% endblock %}

@@ -19,7 +19,7 @@
             <th scope="col">{{ 'Ends at'|trans }}</th>
             <th scope="col">{{ 'Public'|trans }}</th>
             <th scope="col">{{ 'Tickets'|trans }}</th>
-            <th scope="col"></th>
+            <th scope="col" class="col-3"></th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +36,7 @@
                         <a href="{{ path('app_events_show', {'id': event.id}) }}" class="btn btn-primary">{{ 'View'|trans }}</a>
                         {% if "ROLE_ADMIN" in app.user.roles or app.user in event.hosts %}
                         <a href="{{ path('app_events_edit', {'id': event.id}) }}" class="btn btn-secondary">{{ 'Edit'|trans }}</a>
+                            <a href="{{ path('app_events_tickets', {'id': event.id}) }}" class="btn btn-warning">{{ 'Tickets'|trans }}</a>
                         {% endif %}
                         {% if "ROLE_ADMIN" in app.user.roles %}
                             <button
@@ -48,6 +49,9 @@
                             >
                                 {{ 'Delete'|trans }}
                             </button>
+                        {% endif %}
+                        {% if "ROLE_ADMIN" in app.user.roles or app.user in event.hosts or app.user in event.ticketCheckers %}
+                            <a href="{{ path('app_event_checking', {'id': event.id}) }}" class="btn btn-info">{{ 'Checking'|trans }}</a>
                         {% endif %}
                     </div>
                 </td>
