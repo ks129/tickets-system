@@ -7,6 +7,7 @@ namespace App\Form;
 use App\Entity\EventTicketType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,6 +30,11 @@ class EventTicketTypeType extends AbstractType
             ])
             ->add('requirements', CKEditorType::class, [
                 'label' => 'Requirements',
+                'translation_domain' => 'event',
+                'required' => true,
+            ])
+            ->add('available', CheckboxType::class, [
+                'label' => 'Available',
                 'translation_domain' => 'event',
                 'required' => true,
             ]);

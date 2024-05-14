@@ -20,7 +20,7 @@ class EventTicketType
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 3)]
-    private ?string $price = null;
+    private ?float $price = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $requirements = null;
@@ -34,6 +34,9 @@ class EventTicketType
      */
     #[ORM\OneToMany(targetEntity: Ticket::class, mappedBy: 'ticketType', orphanRemoval: true)]
     private Collection $tickets;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $available = null;
 
     public function __construct()
     {
@@ -57,12 +60,12 @@ class EventTicketType
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
@@ -119,6 +122,18 @@ class EventTicketType
                 $ticket->setTicketType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): static
+    {
+        $this->available = $available;
 
         return $this;
     }

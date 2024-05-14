@@ -11,8 +11,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ 'General information'|trans }}</h5>
                     <p><b>{{ 'Name'|trans }}</b>: {{ event.name }}</p>
-                    <p><b>{{ 'Begin at'|trans }}</b>: {{ event.beginAt|format_datetime }}</p>
-                    <p><b>{{ 'End at'|trans }}</b>: {{ event.endAt|format_datetime }}</p>
+                    <p><b>{{ 'Begins at'|trans }}</b>: {{ event.beginAt|format_datetime }}</p>
+                    <p><b>{{ 'Ends at'|trans }}</b>: {{ event.endAt|format_datetime }}</p>
                     <p><b>{{ 'Public'|trans }}</b>: {{ event.public ? 'Yes'|trans : 'No'|trans }}</p>
                     <p><b>{{ 'Hosts'|trans }}</b>: {{ event.hosts|join(', ') }}</p>
                     <p><b>{{ 'Checkers'|trans }}</b>: {{ event.ticketCheckers|join(', ') }}</p>

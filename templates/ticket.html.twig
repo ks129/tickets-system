@@ -1,0 +1,16 @@
+<h3>{{ ticket.ticketType.event.name }}</h3>
+<p>
+    {{ 'From %begin% to %end%'|trans({'%begin%': ticket.ticketType.event.beginAt|format_datetime, '%end%': ticket.ticketType.event.endAt|format_datetime }) }}
+</p>
+
+<p>
+    <b>{{ 'Name'|trans }}:</b> {{ ticket.firstName }} {{ ticket.lastName }} <br>
+    <b>{{ 'Phone number'|trans }}:</b> {{ ticket.phone }}<br>
+    <b>{{ 'Email address'|trans }}:</b> {{ ticket.email }}<br>
+    <b>{{ 'Ticket type'|trans }}:</b> {{ ticket.ticketType.name }}<br>
+    <b>{{ 'Price'|trans }}:</b> {{ ticket.ticketType.price|format_currency('EUR') }}<br>
+    <b>{{ 'Paid'|trans }}:</b> {{ ticket.paid ? 'Yes'|trans : 'No'|trans }}
+</p>
+
+{% set qrCode = qr_code_result(ticket.ticketNumber) %}
+<img src="{{ qrCode.dataUri }}" width="{{ qrCode.matrix.outerSize }}" />

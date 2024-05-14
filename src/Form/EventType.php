@@ -10,6 +10,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -35,8 +36,14 @@ class EventType extends AbstractType
                 'translation_domain' => 'event',
                 'required' => true,
             ])
-            ->add('beginAt')
-            ->add('endAt')
+            ->add('beginAt', DateTimeType::class, [
+                'label' => 'Begins at',
+                'translation_domain' => 'event',
+            ])
+            ->add('endAt', DateTimeType::class, [
+                'label' => 'Ends at',
+                'translation_domain' => 'event',
+            ])
             ->add('hosts', EntityType::class, [
                 'label' => 'Hosts',
                 'translation_domain' => 'event',

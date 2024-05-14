@@ -42,7 +42,7 @@ class EventTicketTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/event-ticket-type/{id}/edit', name: 'app_event_ticket_type_edit', methods: ['POST'])]
+    #[Route('/event-ticket-type/{id}/edit', name: 'app_event_ticket_type_edit')]
     public function edit(EventTicketType $eventTicketType, EntityManagerInterface $entityManager, Request $request, TranslatorInterface $translator): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$eventTicketType->getEvent()->getHosts()->contains($this->getUser())) {
@@ -61,14 +61,14 @@ class EventTicketTypeController extends AbstractController
             return $this->redirectToRoute('app_events_show', ['id' => $eventTicketType->getEvent()->getId()]);
         }
 
-        return $this->render('event_ticket_type/new.html.twig', [
+        return $this->render('event_ticket_type/edit.html.twig', [
             'event' => $eventTicketType->getEvent(),
             'type' => $eventTicketType,
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/event-ticket-type/{id}/delete', name: 'app_event_ticket_type_delete')]
+    #[Route('/event-ticket-type/{id}/delete', name: 'app_event_ticket_type_delete', methods: ['POST'])]
     public function delete(EventTicketType $eventTicketType, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         if (!$this->isGranted('ROLE_ADMIN') && !$eventTicketType->getEvent()->getHosts()->contains($this->getUser())) {

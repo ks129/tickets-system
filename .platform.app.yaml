@@ -15,6 +15,10 @@ runtime:
 build:
     flavor: none
 
+dependencies:
+    ruby:
+        "wkhtmltopdf-binary": "> 0.0"
+
 disk: 512
 
 web:

@@ -32,6 +32,14 @@ class EventRepository extends ServiceEntityRepository
             ->orderBy('e.id', 'ASC');
     }
 
+    public function findCurrentPublicEvents(): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.isPublic = true')
+            ->andWhere('e.endAt >= CURRENT_TIMESTAMP()')
+            ->orderBy('e.beginAt', 'ASC');
+    }
+
     //    /**
     //     * @return Event[] Returns an array of Event objects
     //     */
