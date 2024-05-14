@@ -37,7 +37,6 @@ class TicketRepository extends ServiceEntityRepository
             ->setParameter('ticketNumber', $ticketNumber)
             ->getQuery()
             ->getOneOrNullResult();
-
     }
 
     //    /**

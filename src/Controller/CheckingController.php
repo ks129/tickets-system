@@ -43,11 +43,11 @@ class CheckingController extends AbstractController
         $ticket = $ticketRepository->findByEventAndTicketNumber($event, $ticketNumber);
         if (!$ticket) {
             return new JsonResponse([
-                'html' => $this->renderView('check_response.html.twig', ['success' => false, 'warning' => false, 'ticket' => null])
+                'html' => $this->renderView('check_response.html.twig', ['success' => false, 'warning' => false, 'ticket' => null]),
             ]);
         }
 
-        if ($ticket->getTimesUsed() !== 0 || !$ticket->isPaid()) {
+        if (0 !== $ticket->getTimesUsed() || !$ticket->isPaid()) {
             $html = $this->renderView('check_response.html.twig', ['success' => false, 'warning' => true, 'ticket' => $ticket]);
         } else {
             $html = $this->renderView('check_response.html.twig', ['success' => true, 'warning' => false, 'ticket' => $ticket]);
