@@ -20,22 +20,18 @@ class EventTicketTypeType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('price', MoneyType::class, [
                 'label' => 'Price',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('requirements', CKEditorType::class, [
                 'label' => 'Requirements',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('available', CheckboxType::class, [
                 'label' => 'Available',
-                'translation_domain' => 'event',
                 'required' => true,
             ]);
     }

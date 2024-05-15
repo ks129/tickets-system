@@ -20,19 +20,16 @@ class RegistrationFormType extends AbstractType
                 'row_attr' => ['class' => 'mb-3 form-floating'],
                 'attr' => ['placeholder' => ''],
                 'label' => 'E-mail address',
-                'translation_domain' => 'auth',
             ])
             ->add('firstName', TextType::class, [
                 'row_attr' => ['class' => 'mb-3 form-floating'],
                 'attr' => ['placeholder' => ''],
                 'label' => 'First name',
-                'translation_domain' => 'auth',
             ])
             ->add('lastName', TextType::class, [
                 'row_attr' => ['class' => 'mb-3 form-floating'],
                 'attr' => ['placeholder' => ''],
                 'label' => 'Last name',
-                'translation_domain' => 'auth',
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -52,7 +49,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => 'Password',
-                'translation_domain' => 'auth',
             ])
         ;
     }

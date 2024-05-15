@@ -10,6 +10,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,38 +29,40 @@ class EventType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('description', CKEditorType::class, [
                 'label' => 'Description',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('beginAt', DateTimeType::class, [
                 'label' => 'Begins at',
-                'translation_domain' => 'event',
+                'required' => true,
             ])
             ->add('endAt', DateTimeType::class, [
                 'label' => 'Ends at',
-                'translation_domain' => 'event',
+                'required' => true,
             ])
             ->add('hosts', EntityType::class, [
                 'label' => 'Hosts',
-                'translation_domain' => 'event',
                 'autocomplete' => true,
                 'class' => User::class,
                 'multiple' => true,
             ])
             ->add('ticketCheckers', EntityType::class, [
                 'label' => 'Ticket checkers',
-                'translation_domain' => 'event',
                 'autocomplete' => true,
                 'class' => User::class,
                 'multiple' => true,
             ])
-            ->add('isPublic')
-            ->add('ticketsAvailable');
+            ->add('isPublic', CheckboxType::class, [
+                'label' => 'Is public?',
+                'required' => true,
+            ])
+            ->add('ticketsAvailable', CheckboxType::class, [
+                'label' => 'Tickets available?',
+                'required' => true,
+            ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             if (!$this->security->isGranted('ROLE_ADMIN')) {

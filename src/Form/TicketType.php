@@ -23,28 +23,23 @@ class TicketType extends AbstractType
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'First name',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Last name',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('email', TextType::class, [
                 'label' => 'Email',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('phone', TextType::class, [
                 'label' => 'Phone number',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('ticketType', EntityType::class, [
                 'class' => EventTicketType::class,
                 'label' => 'Ticket type',
-                'translation_domain' => 'event',
                 'query_builder' => function (EntityRepository $er) use ($event): QueryBuilder {
                     return $er->createQueryBuilder('t')
                         ->andWhere('t.event = :event')

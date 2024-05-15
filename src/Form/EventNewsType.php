@@ -18,12 +18,10 @@ class EventNewsType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Title',
-                'translation_domain' => 'event',
                 'required' => true,
             ])
             ->add('content', CKEditorType::class, [
                 'label' => 'Content',
-                'translation_domain' => 'event',
                 'required' => true,
             ]);
     }
