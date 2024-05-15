@@ -50,14 +50,22 @@ class PublicController extends AbstractController
             $data->setTicketNumber('EVENT-'.$event->getId().'-'.time().'-'.Uuid::uuid4());
             $entityManager->persist($data);
             $entityManager->flush();
-            $this->addFlash('success', $translator->trans('Ticket successfully generated. PDF file will be downloaded shortly.'));
 
-            return $this->redirectToRoute('app_view_event_public', ['id' => $event->getId()]);
+            return $this->redirectToRoute('app_confirmation', ['ticketNumber' => $data->getTicketNumber()]);
         }
 
         return $this->render('buy.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/confirmation/{ticketNumber}', name: 'app_confirmation')]
+    public function confirmation(Ticket $ticket): Response
+    {
+        return $this->render('confirmation.html.twig', [
+            'ticket' => $ticket,
+            'event' => $ticket->getTicketType()->getEvent(),
         ]);
     }
 

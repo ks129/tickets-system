@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'Thank you!'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="mb-3">
+        <a href="{{ path('app_home') }}" class="btn btn-secondary">{{ 'Back to home'|trans }}</a>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <p>
+                {{ 'Thank you for buying a ticket to event %event%.'|trans({'%event%': event.name}) }}
+                {{ 'You can download your ticket from here:'|trans }}
+            </p>
+            <a href="{{ path('app_download_ticket', {'ticketNumber': ticket.ticketNumber}) }}" class="btn btn-primary">{{ 'Download ticket'|trans }}</a>
+        </div>
+    </div>
+{% endblock %}
