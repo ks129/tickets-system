@@ -18,6 +18,7 @@ export default class extends Controller {
     onSuccess(decodedText, decodedResult) {
         if (window.sessionStorage.getItem('lastQrcodeScanned') !== decodedText) {
             window.sessionStorage.setItem('lastQrcodeScanned', decodedText);
+            document.getElementById("response-area").innerHTML = '<div class="spinner-grow" role="status"><span class="visually-hidden">Loading...</span></div>';
             axios.post(window.checkingUrlForApp, {
                 eventId: window.eventIdForApp,
                 ticketNumber: decodedText
