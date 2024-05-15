@@ -60,6 +60,7 @@ hooks:
         NODE_VERSION=18 symfony-build
         php bin/console ckeditor:install --clear=drop --tag=4.22.1
         php bin/console assets:install
+        wkhtmltopdf -V
     deploy: |
         set -x -e
 
