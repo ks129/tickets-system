@@ -33,8 +33,8 @@
                 <td>{{ event.ticketsAvailable ? 'Available'|trans : 'Not available'|trans }}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="{{ 'Event actions'|trans }}">
-                        <a href="{{ path('app_events_show', {'id': event.id}) }}" class="btn btn-primary">{{ 'View'|trans }}</a>
                         {% if "ROLE_ADMIN" in app.user.roles or app.user in event.hosts %}
+                            <a href="{{ path('app_events_show', {'id': event.id}) }}" class="btn btn-primary">{{ 'View'|trans }}</a>
                         <a href="{{ path('app_events_edit', {'id': event.id}) }}" class="btn btn-secondary">{{ 'Edit'|trans }}</a>
                             <a href="{{ path('app_events_tickets', {'id': event.id}) }}" class="btn btn-warning">{{ 'Tickets'|trans }}</a>
                         {% endif %}

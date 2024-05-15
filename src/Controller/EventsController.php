@@ -92,6 +92,10 @@ class EventsController extends AbstractController
     #[Route('/events/{id}', name: 'app_events_show')]
     public function view(Event $event): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN') && !$event->getHosts()->contains($this->getUser())) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('events/view.html.twig', [
             'event' => $event,
         ]);
