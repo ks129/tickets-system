@@ -58,7 +58,7 @@ hooks:
         # php-ext-install iconv X.Y.Z
         
         NODE_VERSION=18 symfony-build
-        php bin/console ckeditor:install -vvv --clear=drop --version=4.22.1
+        php bin/console ckeditor:install --clear=drop --tag=4.22.1
         php bin/console assets:install
     deploy: |
         set -x -e
